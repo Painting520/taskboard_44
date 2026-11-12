@@ -72,22 +72,24 @@ def show_tasks():
     if not tasks:
         print("暂无任务")
         return
+    # 【feature 修改】强化优先级排序，增加二级排序：先优先级，再截止日期，再创建时间
     weight = {"高": 0, "中": 1, "低": 2}
     tasks_sorted = sorted(
         tasks,
         key=lambda x: (
             weight.get(x["priority"], 99),
-            x["due_date"] if x["due_date"] else "9999-12-31"
+            x["due_date"] if x["due_date"] else "9999-12-31",
+            x["create_time"]
         )
     )
-    print("\n" + "=" * 70)
-    print(f"{'ID':<4}{'状态':<6}{'任务名称':<22}{'优先级':<6}{'截止日期':<12}{'创建时间'}")
-    print("-" * 70)
+    print("\n" + "=" * 72)
+    print(f"{'ID':<4}{'状态':<6}{'任务名称':<24}{'优先级':<6}{'截止日期':<12}{'创建时间'}")
+    print("-" * 72)
     for t in tasks_sorted:
         status = "✓完成" if t["finished"] else "○待办"
         due = t["due_date"] if t["due_date"] else "无"
-        print(f"{t['id']:<4}{status:<6}{t['name']:<22}{t['priority']:<6}{due:<12}{t['create_time']}")
-    print("=" * 70 + "\n")
+        print(f"{t['id']:<4}{status:<6}{t['name']:<24}{t['priority']:<6}{due:<12}{t['create_time']}")
+    print("=" * 72 + "\n")
 
 def export_markdown():
     tasks = load_tasks()
@@ -113,7 +115,7 @@ def menu():
     while True:
         print("===== taskboard_44 命令行任务看板 =====")
         print("1. 添加任务")
-        print("2. 查看任务（自动排序）")
+        print("2. 查看任务（按优先级+截止日期排序）")
         print("3. 标记任务完成")
         print("4. 导出 Markdown 日报")
         print("0. 退出")
