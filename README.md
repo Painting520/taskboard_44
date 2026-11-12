@@ -1,5 +1,5 @@
 # taskboard_44
-> Python 命令行任务看板｜软件工程课程实践项目
+> Python 命令行任务看板
 
 ## 项目简介
 本项目是一个基于 Python 的命令行任务看板，数据持久化保存在本地 tasks.json。
