@@ -27,7 +27,6 @@ def add_task():
     due_date = None
     if due_str:
         try:
-            # bugfix：支持自动剔除首尾空白，容错更强
             due_str = due_str.strip()
             datetime.strptime(due_str, "%Y-%m-%d")
             due_date = due_str
@@ -75,6 +74,7 @@ def show_tasks():
         print("暂无任务")
         return
     weight = {"高": 0, "中": 1, "低": 2}
+    # bugfix 分支：这里写一套和 feature 不一样的排序注释 + key
     tasks_sorted = sorted(
         tasks,
         key=lambda x: (
@@ -115,7 +115,7 @@ def menu():
     while True:
         print("===== taskboard_44 命令行任务看板 =====")
         print("1. 添加任务")
-        print("2. 查看任务（自动排序）")
+        print("2. 查看任务（按优先级、截止日期排序）")
         print("3. 标记任务完成")
         print("4. 导出 Markdown 日报")
         print("0. 退出")
