@@ -27,10 +27,11 @@ def add_task():
     due_date = None
     if due_str:
         try:
+            due_str = due_str.strip()
             datetime.strptime(due_str, "%Y-%m-%d")
             due_date = due_str
         except ValueError:
-            print("日期格式错误，该任务不设置截止日期")
+            print("⚠️ 日期格式错误，忽略该截止日期")
     task = {
         "id": len(load_tasks()) + 1,
         "name": name,
@@ -74,6 +75,7 @@ def show_tasks():
         return
     # 【feature 修改】强化优先级排序，增加二级排序：先优先级，再截止日期，再创建时间
     weight = {"高": 0, "中": 1, "低": 2}
+    # bugfix 分支：这里写一套和 feature 不一样的排序注释 + key
     tasks_sorted = sorted(
         tasks,
         key=lambda x: (
@@ -115,7 +117,11 @@ def menu():
     while True:
         print("===== taskboard_44 命令行任务看板 =====")
         print("1. 添加任务")
+<<<<<<< HEAD
         print("2. 查看任务（按优先级+截止日期排序）")
+=======
+        print("2. 查看任务（按优先级、截止日期排序）")
+>>>>>>> bugfix/date-parse
         print("3. 标记任务完成")
         print("4. 导出 Markdown 日报")
         print("0. 退出")
