@@ -27,10 +27,12 @@ def add_task():
     due_date = None
     if due_str:
         try:
+            # bugfix：支持自动剔除首尾空白，容错更强
+            due_str = due_str.strip()
             datetime.strptime(due_str, "%Y-%m-%d")
             due_date = due_str
         except ValueError:
-            print("日期格式错误，该任务不设置截止日期")
+            print("⚠️ 日期格式错误，忽略该截止日期")
     task = {
         "id": len(load_tasks()) + 1,
         "name": name,
